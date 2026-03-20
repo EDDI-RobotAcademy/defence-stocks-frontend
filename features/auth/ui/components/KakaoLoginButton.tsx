@@ -1,7 +1,7 @@
 "use client";
 
 import { clientEnv } from "@/infrastructure/config/env";
-import OAuthLoginButton from "@/features/auth/ui/components/OAuthLoginButton";
+import { kakaoButtonStyles } from "@/ui/styles/kakaoButtonStyles";
 
 export default function KakaoLoginButton() {
   const handleKakaoLogin = () => {
@@ -10,10 +10,12 @@ export default function KakaoLoginButton() {
   };
 
   return (
-    <OAuthLoginButton
-      provider="kakao"
-      label="Kakao로 로그인"
+    <button
+      type="button"
       onClick={handleKakaoLogin}
-    />
+      className={`${kakaoButtonStyles.base} ${kakaoButtonStyles.default}`}
+    >
+      Kakao로 로그인
+    </button>
   );
 }
