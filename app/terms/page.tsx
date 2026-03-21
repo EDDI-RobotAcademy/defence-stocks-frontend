@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { authApi } from "@/features/auth/infrastructure/api/authApi";
+import { userProfileStorage } from "@/features/auth/infrastructure/storage/userProfileStorage";
 import { getTerms } from "@/features/terms/domain/model/getTerms";
 import { termsStorage } from "@/features/terms/infrastructure/storage/termsStorage";
 import TermGroupItem from "@/features/terms/ui/components/TermGroupItem";
@@ -42,18 +42,14 @@ export default function TermsPage() {
   };
 
   useEffect(() => {
-    authApi
-      .fetchMe()
-      .then((me) => {
-        if (!me.isRegistered) {
-          setReady(true);
-        } else {
-          router.replace("/");
-        }
-      })
-      .catch(() => {
-        router.replace("/login");
-      });
+    const profile = userProfileStorage.load();
+
+    if (!profile) {
+      router.replace("/login");
+      return;
+    }
+
+    setReady(true);
   }, [router]);
 
   if (!ready) {
