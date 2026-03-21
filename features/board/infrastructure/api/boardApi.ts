@@ -2,6 +2,7 @@ import { httpClient, HttpError } from "@/infrastructure/http/httpClient";
 import type { BoardPage } from "@/features/board/domain/model/boardPage";
 import type { BoardPostDetail } from "@/features/board/domain/model/boardPostDetail";
 import type { CreatePostRequest } from "@/features/board/domain/model/createPostRequest";
+import type { EditPostRequest } from "@/features/board/domain/model/editPostRequest";
 
 interface BoardPostResponse {
   readonly board_id: number;
@@ -71,5 +72,15 @@ export const boardApi = {
       }
       throw error;
     }
+  },
+  async editPost(request: EditPostRequest): Promise<number> {
+    const response = await httpClient.put<BoardPostDetailResponse>(
+      `/board/edit/${request.boardId}`,
+      {
+        title: request.title,
+        content: request.content,
+      },
+    );
+    return response.board_id;
   },
 } as const;
