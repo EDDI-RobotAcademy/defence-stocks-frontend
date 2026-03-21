@@ -42,7 +42,13 @@ export default function BoardPage() {
   return (
     <div className={s.container}>
       <div className={s.content}>
-        <h1 className={s.title}>밀리터리 게시판</h1>
+        <div className={s.header.wrapper}>
+          <h1 className={s.header.title}>밀리터리 게시판</h1>
+          <span className={s.header.badge}>
+            <span className={s.header.badgeDot} />
+            Live
+          </span>
+        </div>
 
         {isLoading && (
           <div className={s.loading}>게시물을 불러오는 중...</div>
@@ -55,13 +61,16 @@ export default function BoardPage() {
         )}
 
         {isEmpty && (
-          <div className={s.empty}>등록된 게시물이 없습니다.</div>
+          <div className={s.empty}>
+            <span>등록된 게시물이 없습니다.</span>
+          </div>
         )}
 
         {!isLoading && !error && !isEmpty && (
           <>
             <div className={s.table.wrapper}>
               <div className={s.table.header}>
+                <span>번호</span>
                 <span>제목</span>
                 <span>작성자</span>
                 <span>작성일</span>
@@ -69,17 +78,38 @@ export default function BoardPage() {
               </div>
               {posts.map((post) => (
                 <div key={post.id} className={s.table.row}>
-                  <span className={s.table.rowTitle}>{post.title}</span>
-                  <span className={s.table.rowMeta}>
-                    <span className={s.table.rowMetaLabel}>작성자</span>
+                  <span className={s.table.rowNumber}>{post.id}</span>
+
+                  <div className={s.table.mobileHeader}>
+                    <span className={s.table.mobileNumber}>{post.id}</span>
+                    <span className={s.table.rowTitle}>{post.title}</span>
+                  </div>
+                  <span className={`${s.table.rowTitle} hidden sm:block`}>
+                    {post.title}
+                  </span>
+
+                  <div className={s.table.mobileMetaRow}>
+                    <span className={s.table.rowMeta}>
+                      <span className={s.table.rowMetaLabel}>작성자</span>
+                      {post.nickname}
+                    </span>
+                    <span className={s.table.rowMeta}>
+                      <span className={s.table.rowMetaLabel}>작성일</span>
+                      {post.createdAt}
+                    </span>
+                    <span className={s.table.rowMeta}>
+                      <span className={s.table.rowMetaLabel}>조회</span>
+                      {post.viewCount}
+                    </span>
+                  </div>
+
+                  <span className={`${s.table.rowMeta} hidden sm:block`}>
                     {post.nickname}
                   </span>
-                  <span className={s.table.rowMeta}>
-                    <span className={s.table.rowMetaLabel}>작성일</span>
+                  <span className={`${s.table.rowMeta} hidden sm:block`}>
                     {post.createdAt}
                   </span>
-                  <span className={s.table.rowMeta}>
-                    <span className={s.table.rowMetaLabel}>조회</span>
+                  <span className={`${s.table.rowMeta} hidden sm:block`}>
                     {post.viewCount}
                   </span>
                 </div>
