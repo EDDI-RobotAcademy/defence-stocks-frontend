@@ -1,4 +1,5 @@
 import { httpClient } from "@/infrastructure/http/httpClient";
+import { clientEnv } from "@/infrastructure/config/env";
 import type { AuthMe } from "@/features/auth/domain/model/authMe";
 import type { SignupRequest } from "@/features/auth/domain/model/signupRequest";
 
@@ -19,10 +20,24 @@ export const authApi = {
     };
   },
 
-  async signup(request: SignupRequest): Promise<void> {
-    await httpClient.post("/account/sign-up", {
-      nickname: request.nickname,
-      email: request.email,
-    });
+  submitSignup(request: SignupRequest): void {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = `${clientEnv.apiBaseUrl}/account/sign-up`;
+
+    const nicknameInput = document.createElement("input");
+    nicknameInput.type = "hidden";
+    nicknameInput.name = "nickname";
+    nicknameInput.value = request.nickname;
+    form.appendChild(nicknameInput);
+
+    const emailInput = document.createElement("input");
+    emailInput.type = "hidden";
+    emailInput.name = "email";
+    emailInput.value = request.email;
+    form.appendChild(emailInput);
+
+    document.body.appendChild(form);
+    form.submit();
   },
 } as const;

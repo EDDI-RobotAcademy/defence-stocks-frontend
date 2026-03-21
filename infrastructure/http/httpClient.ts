@@ -14,16 +14,11 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${clientEnv.apiBaseUrl}${path}`, {
     ...options,
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
       ...options?.headers,
     },
   });
-
-  if (response.type === "opaqueredirect" || (response.status >= 300 && response.status < 400)) {
-    return undefined as T;
-  }
 
   if (!response.ok) {
     throw new HttpError(response.status, response.statusText);

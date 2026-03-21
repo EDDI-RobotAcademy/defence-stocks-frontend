@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAtomValue } from "jotai";
+import { isAuthenticatedAtom } from "@/features/auth/application/selectors/authSelectors";
 import { navbarStyles, navItemStyles, authButtonStyles } from "@/ui/styles/navbarStyles";
 
 const NAV_ITEMS = [
@@ -10,9 +12,7 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const pathname = usePathname();
-
-  // TODO: auth feature 연동 후 실제 인증 상태로 교체
-  const isAuthenticated = false;
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
 
   return (
     <nav className={navbarStyles.nav}>

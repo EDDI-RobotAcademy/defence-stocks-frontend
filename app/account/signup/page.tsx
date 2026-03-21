@@ -32,29 +32,17 @@ export default function SignupPage() {
     setReady(true);
   }, [router]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!canSubmit) return;
 
-    const agreements = termsStorage.load();
-    if (!agreements) return;
-
-    setError("");
+    termsStorage.clear();
+    userProfileStorage.clear();
     setSubmitting(true);
 
-    try {
-      await authApi.signup({
-        nickname: nickname.trim(),
-        email
-      });
-
-      termsStorage.clear();
-      userProfileStorage.clear();
-      router.replace("/");
-    } catch {
-      setError("회원가입에 실패했습니다. 다시 시도해주세요.");
-    } finally {
-      setSubmitting(false);
-    }
+    authApi.submitSignup({
+      nickname: nickname.trim(),
+      email,
+    });
   };
 
   if (!ready) {
