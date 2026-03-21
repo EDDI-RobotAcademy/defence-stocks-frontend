@@ -1,5 +1,6 @@
 import { httpClient } from "@/infrastructure/http/httpClient";
 import type { BoardPage } from "@/features/board/domain/model/boardPage";
+import type { CreatePostRequest } from "@/features/board/domain/model/createPostRequest";
 
 interface BoardPostResponse {
   readonly id: number;
@@ -32,5 +33,11 @@ export const boardApi = {
       totalPages: response.total_pages,
       currentPage: response.current_page,
     };
+  },
+  async createPost(request: CreatePostRequest): Promise<void> {
+    await httpClient.post("/board/create", {
+      title: request.title,
+      content: request.content,
+    });
   },
 } as const;

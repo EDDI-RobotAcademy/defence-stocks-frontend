@@ -14,6 +14,7 @@ import {
   boardErrorAtom,
 } from "@/features/board/application/selectors/boardSelectors";
 import { boardPageStyles as s } from "@/ui/styles/boardPageStyles";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -43,11 +44,16 @@ export default function BoardPage() {
     <div className={s.container}>
       <div className={s.content}>
         <div className={s.header.wrapper}>
-          <h1 className={s.header.title}>밀리터리 게시판</h1>
-          <span className={s.header.badge}>
-            <span className={s.header.badgeDot} />
-            Live
-          </span>
+          <div className="flex items-center gap-3">
+            <h1 className={s.header.title}>밀리터리 게시판</h1>
+            <span className={s.header.badge}>
+              <span className={s.header.badgeDot} />
+              Live
+            </span>
+          </div>
+          <Link href="/board/create" className={s.header.createButton}>
+            글쓰기
+          </Link>
         </div>
 
         {isLoading && (
