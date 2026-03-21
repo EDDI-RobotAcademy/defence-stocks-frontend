@@ -64,8 +64,6 @@ export default function BoardReadPage() {
                   <span>{state.data.nickname}</span>
                   <span className={s.article.metaLabel}>|</span>
                   <span>{state.data.createdAt}</span>
-                  <span className={s.article.metaLabel}>|</span>
-                  <span>조회 {state.data.viewCount}</span>
                 </div>
               </div>
               <div className={s.article.body}>{state.data.content}</div>

@@ -25,9 +25,9 @@ export const boardPageStyles = {
     wrapper:
       "mt-6 overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950",
     header:
-      "hidden border-b border-zinc-200 bg-zinc-50 text-[11px] font-semibold uppercase tracking-widest text-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-500 sm:grid sm:grid-cols-[60px_1fr_100px_110px_70px] sm:gap-4 sm:px-5 sm:py-2.5",
+      "hidden border-b border-zinc-200 bg-zinc-50 text-[11px] font-semibold uppercase tracking-widest text-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-500 sm:grid sm:grid-cols-[60px_1fr_100px_110px] sm:gap-4 sm:px-5 sm:py-2.5",
     row:
-      "group flex flex-col gap-2 border-b border-zinc-100 px-4 py-4 transition-colors hover:bg-blue-50/50 dark:border-zinc-800/60 dark:hover:bg-blue-950/20 sm:grid sm:grid-cols-[60px_1fr_100px_110px_70px] sm:items-center sm:gap-4 sm:px-5 sm:py-3",
+      "group flex flex-col gap-2 border-b border-zinc-100 px-4 py-4 transition-colors hover:bg-blue-50/50 dark:border-zinc-800/60 dark:hover:bg-blue-950/20 sm:grid sm:grid-cols-[60px_1fr_100px_110px] sm:items-center sm:gap-4 sm:px-5 sm:py-3",
     rowNumber:
       "hidden text-sm tabular-nums text-zinc-400 dark:text-zinc-500 sm:block",
     rowTitle:

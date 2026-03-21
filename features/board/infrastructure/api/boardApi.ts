@@ -40,18 +40,17 @@ export const boardApi = {
         title: item.title,
         nickname: item.nickname,
         createdAt: item.created_at.slice(0, 10),
-        viewCount: 0,
       })),
       totalPages: response.total_pages,
       currentPage: response.current_page,
     };
   },
   async createPost(request: CreatePostRequest): Promise<number> {
-    const response = await httpClient.post<{ id: number }>("/board/register", {
+    const response = await httpClient.post<BoardPostDetailResponse>("/board/register", {
       title: request.title,
       content: request.content,
     });
-    return response.id;
+    return response.board_id;
   },
 
   async fetchPost(id: number): Promise<BoardPostDetail | null> {
@@ -65,7 +64,6 @@ export const boardApi = {
         content: response.content,
         nickname: response.nickname,
         createdAt: response.created_at.slice(0, 10),
-        viewCount: 0,
       };
     } catch (error) {
       if (error instanceof HttpError && error.status === 404) {
