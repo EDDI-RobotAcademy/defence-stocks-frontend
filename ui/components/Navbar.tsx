@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAtomValue } from "jotai";
-import { isAuthenticatedAtom } from "@/features/auth/application/selectors/authSelectors";
+import {
+  isAuthenticatedAtom,
+  isAuthLoadingAtom,
+} from "@/features/auth/application/selectors/authSelectors";
 import { navbarStyles, navItemStyles, authButtonStyles } from "@/ui/styles/navbarStyles";
 
 const NAV_ITEMS = [
@@ -13,6 +16,7 @@ const NAV_ITEMS = [
 export default function Navbar() {
   const pathname = usePathname();
   const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const isAuthLoading = useAtomValue(isAuthLoadingAtom);
 
   return (
     <nav className={navbarStyles.nav}>
@@ -37,24 +41,26 @@ export default function Navbar() {
           );
         })}
 
-        {isAuthenticated ? (
-          <button
-            type="button"
-            className={`${authButtonStyles.base} ${authButtonStyles.logout}`}
-          >
-            Logout
-          </button>
-        ) : (
-          <Link
-            href="/login"
-            className={`${authButtonStyles.base} ${
-              pathname === "/login"
-                ? authButtonStyles.loginActive
-                : authButtonStyles.loginInactive
-            }`}
-          >
-            Login
-          </Link>
+        {!isAuthLoading && (
+          isAuthenticated ? (
+            <button
+              type="button"
+              className={`${authButtonStyles.base} ${authButtonStyles.logout}`}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className={`${authButtonStyles.base} ${
+                pathname === "/login"
+                  ? authButtonStyles.loginActive
+                  : authButtonStyles.loginInactive
+              }`}
+            >
+              Login
+            </Link>
+          )
         )}
       </div>
     </nav>
