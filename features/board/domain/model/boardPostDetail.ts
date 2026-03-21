@@ -4,5 +4,4 @@ export interface BoardPostDetail {
   readonly content: string;
   readonly nickname: string;
   readonly createdAt: string;
-  readonly viewCount: number;
 }

@@ -80,10 +80,13 @@ export default function BoardPage() {
                 <span>제목</span>
                 <span>작성자</span>
                 <span>작성일</span>
-                <span>조회수</span>
               </div>
               {posts.map((post) => (
-                <div key={post.id} className={s.table.row}>
+                <Link
+                  key={post.id}
+                  href={`/board/read/${post.id}`}
+                  className={s.table.row}
+                >
                   <span className={s.table.rowNumber}>{post.id}</span>
 
                   <div className={s.table.mobileHeader}>
@@ -103,10 +106,6 @@ export default function BoardPage() {
                       <span className={s.table.rowMetaLabel}>작성일</span>
                       {post.createdAt}
                     </span>
-                    <span className={s.table.rowMeta}>
-                      <span className={s.table.rowMetaLabel}>조회</span>
-                      {post.viewCount}
-                    </span>
                   </div>
 
                   <span className={`${s.table.rowMeta} hidden sm:block`}>
@@ -115,10 +114,7 @@ export default function BoardPage() {
                   <span className={`${s.table.rowMeta} hidden sm:block`}>
                     {post.createdAt}
                   </span>
-                  <span className={`${s.table.rowMeta} hidden sm:block`}>
-                    {post.viewCount}
-                  </span>
-                </div>
+                </Link>
               ))}
             </div>
 
