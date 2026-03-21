@@ -19,12 +19,12 @@ export function useCreatePost() {
     setState({ status: "SUBMITTING" });
 
     try {
-      await boardApi.createPost({
+      const postId = await boardApi.createPost({
         title: title.trim(),
         content: content.trim(),
       });
       setState({ status: "SUCCESS" });
-      router.push("/board");
+      router.push(`/board/read/${postId}`);
     } catch {
       setState({
         status: "ERROR",

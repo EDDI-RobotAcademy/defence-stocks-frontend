@@ -1,10 +1,20 @@
-import { httpClient } from "@/infrastructure/http/httpClient";
+import { httpClient, HttpError } from "@/infrastructure/http/httpClient";
 import type { BoardPage } from "@/features/board/domain/model/boardPage";
+import type { BoardPostDetail } from "@/features/board/domain/model/boardPostDetail";
 import type { CreatePostRequest } from "@/features/board/domain/model/createPostRequest";
 
 interface BoardPostResponse {
   readonly id: number;
   readonly title: string;
+  readonly nickname: string;
+  readonly created_at: string;
+  readonly view_count: number;
+}
+
+interface BoardPostDetailResponse {
+  readonly id: number;
+  readonly title: string;
+  readonly content: string;
   readonly nickname: string;
   readonly created_at: string;
   readonly view_count: number;
@@ -34,10 +44,32 @@ export const boardApi = {
       currentPage: response.current_page,
     };
   },
-  async createPost(request: CreatePostRequest): Promise<void> {
-    await httpClient.post("/board/create", {
+  async createPost(request: CreatePostRequest): Promise<number> {
+    const response = await httpClient.post<{ id: number }>("/board/register", {
       title: request.title,
       content: request.content,
     });
+    return response.id;
+  },
+
+  async fetchPost(id: number): Promise<BoardPostDetail | null> {
+    try {
+      const response = await httpClient.get<BoardPostDetailResponse>(
+        `/board/read/${id}`,
+      );
+      return {
+        id: response.id,
+        title: response.title,
+        content: response.content,
+        nickname: response.nickname,
+        createdAt: response.created_at,
+        viewCount: response.view_count,
+      };
+    } catch (error) {
+      if (error instanceof HttpError && error.status === 404) {
+        return null;
+      }
+      throw error;
+    }
   },
 } as const;
