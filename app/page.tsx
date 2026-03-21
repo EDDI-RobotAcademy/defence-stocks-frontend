@@ -5,6 +5,8 @@ import { Suspense, useEffect } from "react";
 import { useSetAtom } from "jotai";
 import { authAtom } from "@/features/auth/application/atoms/authAtom";
 import { authApi } from "@/features/auth/infrastructure/api/authApi";
+import HeroSection from "@/ui/components/HeroSection";
+import { homePageStyles } from "@/ui/styles/homePageStyles";
 
 function HomeContent() {
   const router = useRouter();
@@ -34,10 +36,8 @@ function HomeContent() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-zinc-50 dark:bg-black">
-      <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
-        Defence Stocks
-      </h1>
+    <div className={homePageStyles.container}>
+      <HeroSection />
     </div>
   );
 }
