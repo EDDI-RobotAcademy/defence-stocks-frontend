@@ -12,6 +12,7 @@ import { navbarStyles, navItemStyles, authButtonStyles } from "@/ui/styles/navba
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/board", label: "Board" },
+  { href: "/youtube", label: "YouTube" },
 ] as const;
 
 export default function Navbar() {
