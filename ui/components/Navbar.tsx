@@ -11,6 +11,7 @@ import { navbarStyles, navItemStyles, authButtonStyles } from "@/ui/styles/navba
 
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
+  { href: "/board", label: "Board" },
 ] as const;
 
 export default function Navbar() {
@@ -26,7 +27,8 @@ export default function Navbar() {
 
       <div className={navbarStyles.menuGroup}>
         {NAV_ITEMS.map(({ href, label }) => {
-          const isActive = pathname === href;
+          const isActive =
+            href === "/" ? pathname === "/" : pathname.startsWith(href);
 
           return (
             <Link
