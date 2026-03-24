@@ -16,6 +16,36 @@ import { youtubePageStyles as s } from "@/ui/styles/youtubePageStyles";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+function buildPageNumbers(
+  current: number,
+  total: number,
+): (number | "...")[] {
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  const pages: (number | "...")[] = [1];
+
+  if (current > 3) {
+    pages.push("...");
+  }
+
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  if (current < total - 2) {
+    pages.push("...");
+  }
+
+  pages.push(total);
+
+  return pages;
+}
+
 export default function YouTubePage() {
   const router = useRouter();
   const isAuthenticated = useAtomValue(isAuthenticatedAtom);
@@ -114,19 +144,23 @@ export default function YouTubePage() {
                   이전
                 </button>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (page) => (
+                {buildPageNumbers(currentPage, totalPages).map((item, idx) =>
+                  item === "..." ? (
+                    <span key={`ellipsis-${idx}`} className={s.pagination.ellipsis}>
+                      ...
+                    </span>
+                  ) : (
                     <button
-                      key={page}
+                      key={item}
                       type="button"
                       className={
-                        page === currentPage
+                        item === currentPage
                           ? s.pagination.buttonActive
                           : s.pagination.button
                       }
-                      onClick={() => goToPage(page)}
+                      onClick={() => goToPage(item as number)}
                     >
-                      {page}
+                      {item}
                     </button>
                   ),
                 )}

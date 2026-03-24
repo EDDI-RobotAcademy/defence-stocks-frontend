@@ -48,5 +48,7 @@ export const youtubePageStyles = {
       "rounded-md border border-blue-500 bg-blue-500 px-3 py-1.5 text-sm font-semibold tabular-nums text-white shadow-sm shadow-blue-500/25",
     buttonDisabled:
       "rounded-md border border-zinc-100 bg-zinc-50 px-3 py-1.5 text-sm tabular-nums text-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-600",
+    ellipsis:
+      "px-2 py-1.5 text-sm text-zinc-400 dark:text-zinc-500",
   },
 } as const;
