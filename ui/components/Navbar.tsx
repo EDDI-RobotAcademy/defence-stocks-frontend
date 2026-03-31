@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/board", label: "Board" },
   { href: "/youtube", label: "YouTube" },
+  { href: "/stock-recommendation", label: "주식 추천" },
 ] as const;
 
 export default function Navbar() {
