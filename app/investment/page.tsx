@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAtomValue } from "jotai";
 import {
   isAuthenticatedAtom,
   isAuthLoadingAtom,
 } from "@/features/auth/application/selectors/authSelectors";
+import { useInvestmentDecision } from "@/features/investment/application/hooks/useInvestmentDecision";
 import { investmentPageStyles as s } from "@/ui/styles/investmentPageStyles";
 import { useRouter } from "next/navigation";
 
@@ -13,8 +14,8 @@ export default function InvestmentPage() {
   const router = useRouter();
   const isAuthenticated = useAtomValue(isAuthenticatedAtom);
   const isAuthLoading = useAtomValue(isAuthLoadingAtom);
-  const [question, setQuestion] = useState("");
-  const isValid = question.trim().length > 0;
+  const { state, question, setQuestion, isValid, submit } =
+    useInvestmentDecision();
 
   useEffect(() => {
     if (!isAuthLoading && !isAuthenticated) {
@@ -50,17 +51,40 @@ export default function InvestmentPage() {
             placeholder="예: LIG넥스원 주가 전망과 투자 판단을 해주세요"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
+            disabled={state.status === "LOADING"}
           />
           <div className={s.prompt.footer}>
             <button
               type="button"
-              className={isValid ? s.prompt.button : s.prompt.buttonDisabled}
-              disabled={!isValid}
+              className={
+                isValid && state.status !== "LOADING"
+                  ? s.prompt.button
+                  : s.prompt.buttonDisabled
+              }
+              disabled={!isValid || state.status === "LOADING"}
+              onClick={submit}
             >
-              요청하기
+              {state.status === "LOADING" ? "분석 중..." : "요청하기"}
             </button>
           </div>
         </div>
+
+        {state.status === "LOADING" && (
+          <div className={s.loading}>AI가 투자 판단을 분석하고 있습니다...</div>
+        )}
+
+        {state.status === "ERROR" && (
+          <div className={s.error}>
+            <span>{state.message}</span>
+          </div>
+        )}
+
+        {state.status === "SUCCESS" && (
+          <div className={s.answer.wrapper}>
+            <span className={s.answer.label}>AI 투자 판단</span>
+            <div className={s.answer.body}>{state.data.answer}</div>
+          </div>
+        )}
       </div>
     </div>
   );
