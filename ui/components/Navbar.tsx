@@ -13,7 +13,9 @@ const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/board", label: "Board" },
   { href: "/youtube", label: "YouTube" },
+  { href: "/news", label: "뉴스" },
   { href: "/stock-recommendation", label: "주식 추천" },
+  { href: "/investment", label: "투자" },
 ] as const;
 
 export default function Navbar() {
